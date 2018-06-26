@@ -1,0 +1,40 @@
+server:
+  port: 9000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+spring:
+  application:
+    name: roses-monitor
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+  boot:
+    admin:
+      client:
+        url: http://localhost:9000
+        username: "${spring.security.user.name}"       #These two are needed so that the client
+        password: "${spring.security.user.password}"   #can register at the protected server api
+        instance:
+          metadata:
+            user.name: "${spring.security.user.name}"         #These two are needed so that the server
+            user.password: "${spring.security.user.password}" #can access the protected client endpoints
+
+eureka:
+  instance:
+    metadata-map:
+      user.name: "${spring.security.user.name}"             #These two are needed so that the server
+      user.password: "${spring.security.user.password}"     #can access the protected client endpoints
+    prefer-ip-address: true
+  client:
+    registry-fetch-interval-seconds: 30
+    service-url:
+      defaultZone: http://localhost:8761/eureka

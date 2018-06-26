@@ -1,2 +1,2 @@
 # roses-config
-https://gitee.com/naan1993/roses-config.git
+Roses的配置服务器
